@@ -17,6 +17,40 @@ cat .ssh/authorized_keys # instance-1(위의 명령어를 실행한 master node)
 
 ## Kubespray 설치법
 ```bash
+sudo apt -y python3-pip vim
+pip --version
+git clone https://github.com/kubernetes-sigs/kubespray.git
+sudo pip install -r requirements.txt
+ansible --version
+cp -rfp inventory/sample inventory/mycluster
+```
+```vim
+[all]
+instance-1 ansible_ssh_host=10.142.0.11 ip=10.142.0.11 etcd_member_name=etcd1
+instance-2 ansible_ssh_host=10.142.0.12 ip=10.142.0.12 etcd_member_name=etcd2
+instance-3 ansible_ssh_host=10.142.0.13 ip=10.142.0.13 etcd_member_name=etcd3
+instance-4 ansible_ssh_host=10.142.0.14 ip=10.142.0.14
+instance-5 ansible_ssh_host=10.142.0.15 ip=10.142.0.15
+# ## configure a bastion host if your nodes are not directly reachable
+# bastion ansible_host=x.x.x.x ansible_user=some_user
+[kube-master]
+instance-1
+instance-2
+instance-3
+[etcd]
+instance-1
+instance-2
+instance-3
+[kube-node]
+instance-4
+instance-5
+[calico-rr]
+[k8s-cluster:children]
+kube-master
+kube-node
+calico-rr
+```
+```bash
 ansible all -i inventory/mycluster/inventory.ini -m apt -a "name=iputils-ping state=present update_cache=yes" --become
 ansible kube-master -i inventory/mycluster/inventory.ini -m file -a "path=/etc/kubernetes state=directory mode=0755" --become
 ansible kube-master -i inventory/mycluster/inventory.ini -m shell -a "NERDCTL_VERSION=2.1.6; curl -L https://github.com/containerd/nerdctl/releases/download/v\$NERDCTL_VERSION/nerdctl-\$NERDCTL_VERSION-linux-amd64.tar.gz | sudo tar -C /usr/local/bin -xz && sudo chmod +x /usr/local/bin/nerdctl" --become
