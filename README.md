@@ -58,6 +58,9 @@ ansible kube-master -i inventory/mycluster/inventory.ini -m shell -a "NERDCTL_VE
 ansible-playbook -i inventory/mycluster/inventory.ini -v --become --become-user=root cluster.yml
 
 #각 마스터 노드에 들어가서 설치
+sudo mkdir -p /etc/kubernetes
+sudo chown root:root /etc/kubernetes
+sudo chmod 755 /etc/kubernetes
 sudo apt install containerd -y
 sudo apt-get install -y kubelet kubeadm kubectl
 ```
