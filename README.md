@@ -17,7 +17,7 @@ cat .ssh/authorized_keys # instance-1(위의 명령어를 실행한 master node)
 
 ## Kubespray 설치법
 ```bash
-sudo apt -y python3-pip vim
+sudo apt install -y python3-pip vim
 pip --version
 git clone https://github.com/kubernetes-sigs/kubespray.git
 sudo pip install -r requirements.txt
