@@ -72,4 +72,25 @@ nerdctl --version # 설치 잘 됐나 확인, 안됐을시 아래 코드 실행
 sudo find /usr/local/bin -name nerdctl #
 sudo mv /usr/local/bin/bin/nerdctl /usr/local/bin/
 sudo chmod +x /usr/local/bin/nerdctl
+
+# 원하는 Kubernetes 버전 지정
+K8S_VERSION="1.33.5"
+
+# kubeadm
+curl -LO https://dl.k8s.io/release/v${K8S_VERSION}/bin/linux/amd64/kubeadm
+sudo install -o root -g root -m 0755 kubeadm /usr/local/bin/kubeadm
+
+# kubelet
+curl -LO https://dl.k8s.io/release/v${K8S_VERSION}/bin/linux/amd64/kubelet
+sudo install -o root -g root -m 0755 kubelet /usr/local/bin/kubelet
+
+# kubectl
+curl -LO https://dl.k8s.io/release/v${K8S_VERSION}/bin/linux/amd64/kubectl
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# 확인
+kubeadm version
+kubelet --version
+kubectl version --client
+
 ```
