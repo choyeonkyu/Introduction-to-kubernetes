@@ -24,6 +24,7 @@ sudo pip install -r requirements.txt
 ansible --version
 cp -rfp inventory/sample inventory/mycluster
 ```
+`~kubespray$ vi inventory/mycluster/inventory.ini`
 ```vim
 [all]
 instance-1 ansible_ssh_host=10.142.0.11 ip=10.142.0.11 etcd_member_name=etcd1
