@@ -93,4 +93,27 @@ kubeadm version
 kubelet --version
 kubectl version --client
 
+# kubelet
+sudo tee /etc/systemd/system/kubelet.service <<EOF
+[Unit]
+Description=kubelet: The Kubernetes Node Agent
+Documentation=https://kubernetes.io/docs/
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/kubelet
+Restart=always
+StartLimitInterval=0
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable kubelet
+sudo systemctl start kubelet
+sudo systemctl status kubelet
+
+
 ```
