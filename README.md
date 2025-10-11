@@ -63,4 +63,13 @@ sudo chown root:root /etc/kubernetes
 sudo chmod 755 /etc/kubernetes
 sudo apt install containerd -y
 sudo apt-get install -y kubelet kubeadm kubectl
+
+#nerdctl 설치법
+NERDCTL_VERSION="1.2.0"   # 필요시 최신 버전 확인
+curl -L https://github.com/containerd/nerdctl/releases/download/v${NERDCTL_VERSION}/nerdctl-full-${NERDCTL_VERSION}-linux-amd64.tar.gz -o nerdctl.tar.gz
+sudo tar Cxzvf /usr/local/bin nerdctl.tar.gz
+nerdctl --version # 설치 잘 됐나 확인, 안됐을시 아래 코드 실행
+sudo find /usr/local/bin -name nerdctl #
+sudo mv /usr/local/bin/bin/nerdctl /usr/local/bin/
+sudo chmod +x /usr/local/bin/nerdctl
 ```
